@@ -6,13 +6,15 @@ export async function GET(req, res) {
 
     // =================================================
     const { MongoClient } = require('mongodb');
-    const url = 'mongodb://root:example@localhost:27017/';
+    const username = encodeURIComponent("Cillian")
+    const password = encodeURIComponent("KoVU8NVsMkw8yvad")
+    const url = `mongodb+srv://${username}:${password}@cluster0.wlig0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
     const client = new MongoClient(url);
-    const dbName = 'app'; // database name
+    const dbName = 'RichWebApp'; // database name
     await client.connect();
     console.log('Connected successfully to server');
     const db = client.db(dbName);
-    const collection = db.collection('products'); // collection name
+    const collection = db.collection('Users'); // collection name
     const findResult = await collection.find({}).toArray();
     console.log('Found documents =>', findResult);
     //==========================================================

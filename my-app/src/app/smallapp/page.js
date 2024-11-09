@@ -83,22 +83,25 @@ export default function MyApp() {
             {showDash &&
                 <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
                     Let's pretend this is the dashboard!
+                        <hr/>
+                    {data!=null &&
+                        data.map((item, i) => (
+                            <div style={{padding: '20px'}} key={1} >
+                                Unique ID: {item._id}
+                                <br></br>
+                                {item.username}
+                                -
+                                {item.password}
+                                <br></br>
+                                <Button variant="outlined"> Add to cart </Button>
+                            </div>
+                        ))
+
+                    }
                 </Box>
             }
 
-            {
-                // data.map((item, i) => (
-                    <div style={{padding: '20px'}} key={1} >
-                        {/*Unique ID: {item._id}*/}
-                        {/*<br></br>*/}
-                        {/*{item.pname}*/}
-                        {/*-*/}
-                        {/*{item.price}*/}
-                        {/*<br></br>*/}
-                        <Button variant="outlined"> Add to cart </Button>
-                    </div>
-                // ))
-            }
+
         </Box>
     );
 }
