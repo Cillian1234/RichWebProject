@@ -13,5 +13,9 @@
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
     "mongodb": "^6.10.0"
+  },
+
+  "scripts": {
+    "dev": "cd ./my-app/src/app && npm run dev"
   }
 }

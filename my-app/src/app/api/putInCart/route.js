@@ -1,3 +1,5 @@
+import {MongoClient} from "mongodb";
+
 export async function GET(req, res) {
 
     // =================================================
@@ -10,7 +12,7 @@ export async function GET(req, res) {
     await client.connect();
     console.log('Connected successfully to server');
     const db = client.db(dbName);
-    const collection = db.collection('products'); // collection name
+    const collection = db.collection('shopping-cart'); // collection name
     const findResult = await collection.find({}).toArray();
     console.log('Found documents =>', findResult);
     //==========================================================

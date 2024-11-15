@@ -3,7 +3,11 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+html > * {
+  border: 0;
+}
+
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -13,7 +17,32 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+}
+
+a {
+  padding: 3px;
+}
+
+.Navbar {
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  margin: 0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px #383838;
+}
+
+.NavLeft {
+  display: flex;
+  align-items: center;
+}
+
+.ProductsList {
+  padding-top: 24px;
 }
 
 body {
