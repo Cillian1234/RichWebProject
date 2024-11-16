@@ -15,17 +15,23 @@ export default function MyApp() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        console.log(username, password)
+
         try {
-            const res = await fetch('http://localhost:3000/api/login', {
+            fetch('http://localhost:3000/api/login', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Indicate the type of data being sent
+                },
                 body: JSON.stringify({
                     username, password
                 })
             })
-            if (!res.ok) throw new Error(res.statusText);
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log("Response from server", data)
+                })
 
-            const {token} = await res.json();
-            document.cookie = `token= + ${token}; path=/`
         } catch (err) {
             console.error(err);
         }
@@ -57,7 +63,13 @@ export default function MyApp() {
                     }}
                 />
 
-                <Button variant="contained" className="loginButton">Log in</Button>
+                <Button
+                    variant="contained"
+                    className="loginButton"
+                    onClick={handleSubmit}
+                >
+                    Log in
+                </Button>
             </Box>
         </Box>
     );
