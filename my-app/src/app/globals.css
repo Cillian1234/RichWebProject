@@ -19,10 +19,6 @@ body {
   max-width: 100vw;
 }
 
-a {
-  padding: 3px;
-}
-
 .Navbar {
   overflow: hidden;
   position: sticky;
@@ -30,7 +26,10 @@ a {
   z-index: 100;
   width: 100%;
   margin: 0;
-  background-color: #ffffff;
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
   display: flex;
   justify-content: space-between;
   box-shadow: 0 2px 5px #383838;
@@ -60,12 +59,46 @@ body {
 }
 
 a {
+  padding: 3px;
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   html {
     color-scheme: dark;
   }
+}
+
+.login {
+  position: relative;
+  top: 68px;
+  border-radius: 5px;
+  border: black 1px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 20vw;
+  margin: 0 auto;
+  padding: 100px 0 60px 0;
+}
+
+.login > label, input {
+  padding: 0 5px 0 0;
+}
+
+.login > label {
+  position: relative;
+  right: 45px;
+}
+
+.loginHeader {
+  position: relative;
+  bottom: 60px;
+}
+
+.loginButton {
+  margin-top: 40px;
+  width: 60%;
 }

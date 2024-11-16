@@ -16,6 +16,6 @@
   },
 
   "scripts": {
-    "dev": "cd ./my-app/src/app && npm run dev"
+    "dev": "cd ./my-app/src/app && (npm install && npm run dev)"
   }
 }
