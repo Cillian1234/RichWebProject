@@ -14,7 +14,7 @@ export default function ProductBox(props) {
                 <br/>
                 {product.pPrice}
                 <br/>
-                <Button variant="outlined"> Add to cart </Button>
+                <Button variant="outlined" onClick={() => props.AddToCart(product.pName)}> Add to cart </Button>
             </div>
         ))
     )

@@ -2,6 +2,10 @@ import {MongoClient} from "mongodb";
 
 export async function GET(req, res) {
 
+    const { searchParams } = new URL(req.url)
+    const item = searchParams.get('item')
+    console.log(item);
+
     // =================================================
     const { MongoClient } = require('mongodb');
     const username = encodeURIComponent("Cillian")
@@ -11,12 +15,18 @@ export async function GET(req, res) {
     const dbName = 'RichWebApp'; // database name
     await client.connect();
     console.log('Connected successfully to server');
+
+
     const db = client.db(dbName);
     const collection = db.collection('shopping-cart'); // collection name
-    const findResult = await collection.find({}).toArray();
-    console.log('Found documents =>', findResult);
+
+    let myobj = { pName: item, username: "sample@test.com"};
+    const insertResult = await collection.insertOne(myobj);
+
+    console.log('Inserted document =>', insertResult);
     //==========================================================
 
+
     // at the end of the process we need to send something back.
-    return Response.json(findResult)
+    return Response.json(insertResult)
 }

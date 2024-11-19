@@ -9,6 +9,11 @@ import ProductBox from "@/components/ProductBox";
 
 export default function MyApp() {
 
+    function AddToCart(item) {
+        console.log('AddToCart', item);
+        fetch("http://localhost:3000/api/putInCart?item="+item);
+    }
+
     const [data, setData] = useState(null)
 
     useEffect(() => {
@@ -27,7 +32,11 @@ export default function MyApp() {
                 <Box component="section">
                     This is a list of products.
                     <hr/>
-                    {data != null && <ProductBox data={data}/>}
+                    {data != null &&
+                        <ProductBox
+                            data={data}
+                            AddToCart = {AddToCart}
+                        />}
                 </Box>
             </Container>
         </Box>

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Navbar from "@/components/Navbar";
-import {FormControl, Input, InputLabel, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 
 
@@ -14,8 +14,6 @@ export default function MyApp() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
-        console.log(username, password)
 
         try {
             fetch('http://localhost:3000/api/login', {
@@ -35,6 +33,7 @@ export default function MyApp() {
         } catch (err) {
             console.error(err);
         }
+        setPassword('')
     }
 
     return (
