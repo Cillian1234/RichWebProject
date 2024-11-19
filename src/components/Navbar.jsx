@@ -21,7 +21,7 @@ export default function Navbar() {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Link href="./">
+                <Link href="">
                     <Image
                         src={LogoPNG}
                         alt="Krispy Kreme logo"
