@@ -11,7 +11,7 @@ export default function MyApp() {
 
     function AddToCart(item) {
         console.log('AddToCart', item);
-        fetch(`/api/putInCart/${item}`);
+        fetch(`/api/putInCart/?item=${item}`);
     }
 
     const [data, setData] = useState(null)
