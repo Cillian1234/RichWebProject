@@ -11,13 +11,13 @@ export default function MyApp() {
 
     function AddToCart(item) {
         console.log('AddToCart', item);
-        fetch("/api/putInCart?item="+item);
+        fetch(`/api/putInCart/${item}`);
     }
 
     const [data, setData] = useState(null)
 
     useEffect(() => {
-        fetch('/api/getProducts')
+        fetch(`/api/getProducts`)
             .then((res) => res.json())
             .then((data) => {
                 setData(data)

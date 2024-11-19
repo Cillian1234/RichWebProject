@@ -2,7 +2,7 @@ export async function GET(req, res) {
 
     // =================================================
     const { MongoClient } = require('mongodb');
-    const url = process.env.MONGODB_URL;
+    const url = process.env.DB_URL;
     const client = new MongoClient(url);
     const dbName = 'RichWebApp'; // database name
     await client.connect();
