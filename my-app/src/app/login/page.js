@@ -16,7 +16,7 @@ export default function MyApp() {
         e.preventDefault();
 
         try {
-            fetch('http://localhost:3000/api/login', {
+            fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Indicate the type of data being sent

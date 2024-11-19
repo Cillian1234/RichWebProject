@@ -2,9 +2,7 @@ import {MongoClient} from "mongodb";
 
 export async function POST(req, res) {
     const { MongoClient } = require('mongodb');
-    const DBusername = encodeURIComponent("Cillian")
-    const DBpassword = encodeURIComponent("KoVU8NVsMkw8yvad")
-    const url = `mongodb+srv://${DBusername}:${DBpassword}@cluster0.wlig0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+    const url = process.env.MONGODB_URL;
     const client = new MongoClient(url);
     const dbName = 'RichWebApp'; // database name
     await client.connect();

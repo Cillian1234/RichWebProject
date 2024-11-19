@@ -8,9 +8,7 @@ export async function GET(req, res) {
 
     // =================================================
     const { MongoClient } = require('mongodb');
-    const username = encodeURIComponent("Cillian")
-    const password = encodeURIComponent("KoVU8NVsMkw8yvad")
-    const url = `mongodb+srv://${username}:${password}@cluster0.wlig0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+    const url = process.env.MONGODB_URL;
     const client = new MongoClient(url);
     const dbName = 'RichWebApp'; // database name
     await client.connect();
