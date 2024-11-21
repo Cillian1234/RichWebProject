@@ -1,4 +1,4 @@
-import {MongoClient} from "mongodb";
+import connectDB from "@/app/api/connectDB";
 
 export async function GET(req, res) {
 
@@ -7,15 +7,7 @@ export async function GET(req, res) {
     console.log(item);
 
     // =================================================
-    const { MongoClient } = require('mongodb');
-    const url = process.env.DB_URL;
-    const client = new MongoClient(url);
-    const dbName = 'RichWebApp'; // database name
-    await client.connect();
-    console.log('Connected successfully to server');
-
-
-    const db = client.db(dbName);
+    const db= await connectDB();
     const collection = db.collection('shopping-cart'); // collection name
 
     let myobj = { pName: item, username: "sample@test.com"};

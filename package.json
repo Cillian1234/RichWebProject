@@ -4,16 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm install && next dev",
     "build": "next build",
-    "start": "npm install && npm run dev)",
+    "start": "next start",
     "lint": "next lint"
   },
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/style": "^0.8.0",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
     "mongodb": "^6.10.0",
