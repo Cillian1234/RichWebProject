@@ -11,12 +11,10 @@ export default function MyApp() {
     const [weatherData, setWeatherData] = React.useState("");
 
     useEffect(() => {
-        fetch("http://api.weatherapi.com/v1/current.json?key=e7c488c7a361474b85f144807242410&q=Dublin&aqi=no")
+        fetch("https://api.weatherapi.com/v1/current.json?key=e7c488c7a361474b85f144807242410&q=Dublin&aqi=no")
             .then(res => res.json())
             .then(data => setWeatherData(data))
     }, [])
-
-    console.log(weatherData);
 
     function buildWeatherDisplay() {
         return (
