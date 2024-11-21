@@ -1,0 +1,10 @@
+.productBoxContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.productBox {
+    width: 50%;
+}
