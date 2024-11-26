@@ -11,10 +11,12 @@ export default function ProductBox(props) {
     const ProductBoxElements = (
         productsData.map((product, i) => (
             <div className="productBox" key={i} >
-                <img src={null} alt={product.name} />
-                <h2 className="itemName">{product.pName}</h2>
-                <p className="itemPrice">{product.pPrice}</p>
-                <Button className="addButton" variant="outlined" onClick={() => props.AddToCart(product.pName)}> Add to cart </Button>
+                <img src="https://www.krispykreme.ie/media/catalog/product/a/s/assorted_dozen_-_with_lip_result_1.png?quality=80&fit=bounds&height=&width=&canvas=:" alt={product.name} />
+                <div className="productInfo">
+                    <h2 className="itemName">{product.pName}</h2>
+                    <p className="itemPrice">{product.pPrice}</p>
+                    <Button className="addButton" variant="outlined" onClick={() => props.AddToCart(product.pName)}> Add to cart </Button>
+                </div>
             </div>
         ))
     )

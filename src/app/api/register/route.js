@@ -13,23 +13,31 @@ export async function POST(req, res) {
     try {
         if (!username || !password) {
             console.log("Username and password required")
-            return Response.json(null)
+
         } else {
             findResult = await collection.findOne(
                 {
-                    username, password
+                    username
                 }
             )
-            if (!findResult) {
-                console.log("No documents found")
-                return Response.json(null)
+            console.log(findResult)
+            if (findResult) {
+                console.log("Username already in use")
+
             } else {
-                console.log('Found documents =>', findResult)
+                findResult = await collection.insertOne(
+                    {
+                        username: username,
+                        password: password,
+                        acc_type: "Customer"
+                    })
+                redirect('/')
                 return Response.json(findResult)
             }
         }
     } catch (error) {
         console.error("Login error:", error)
+
     }
-    return Response.json(findResult)
+    return Response.json("findResult")
 }

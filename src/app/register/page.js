@@ -5,14 +5,13 @@ import Box from '@mui/material/Box';
 import Navbar from "@/components/Navbar";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import Link from "next/link";
-import {redirect} from "next/navigation";
 
 
 export default function MyApp() {
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [password2, setPassword2] = React.useState('');
     const [error, setError] = React.useState(false);
 
     function handleError(error) {
@@ -26,38 +25,27 @@ export default function MyApp() {
 
         setUsername(newUsername.trim());
         setPassword(password.trim());
+        setPassword2(password2.trim());
 
-        console.log(username, password);
-
-        let loginSuccess = false;
-
-        try {
-            fetch(`/api/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Indicate the type of data being sent
-                },
-                body: JSON.stringify({
-                    username, password
+        if (password === password2) {
+            try {
+                fetch(`/api/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Indicate the type of data being sent
+                    },
+                    body: JSON.stringify({
+                        username, password
+                    })
                 })
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log("Response from server", data)
-                    if (!data) {
-                        handleError();
-                    } else {
-                        loginSuccess = true;
-                    }
-                })
-        } catch (err) {
-            console.error(err);
-        } finally {
-            if (loginSuccess) {
-                redirect('/')
+
+            } catch (err) {
+                console.error(err);
             }
-        }
         setPassword('')
+        } else {
+            handleError();
+        }
     }
 
     return (
@@ -85,6 +73,15 @@ export default function MyApp() {
                         setPassword(e.target.value);
                     }}
                 />
+                <TextField
+                    variant="outlined"
+                    label="Password"
+                    type="password"
+                    required
+                    onChange={(e) => {
+                        setPassword2(e.target.value);
+                    }}
+                />
 
                 <Button
                     variant="contained"
@@ -95,9 +92,7 @@ export default function MyApp() {
                 </Button>
 
                 {error &&
-                    <p>Incorrect username or password, try
-                    <Link className="createAccountLink" href="./register">create an account</Link>
-                    instead!</p>
+                    <p>Username already in use or passwords do not match, please try again</p>
                 }
             </Box>
         </Box>
