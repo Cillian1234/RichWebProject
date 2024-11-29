@@ -1,5 +1,4 @@
 import connectDB from "@/app/api/connectDB";
-import {redirect} from "next/navigation";
 
 export async function POST(req, res) {
     const db= await connectDB();
