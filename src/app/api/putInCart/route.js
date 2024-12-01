@@ -4,13 +4,17 @@ export async function GET(req, res) {
 
     const { searchParams } = new URL(req.url)
     const item = searchParams.get('item')
-    console.log(item);
+    const price = searchParams.get('price')
 
     // =================================================
     const db= await connectDB();
     const collection = db.collection('shopping-cart'); // collection name
 
-    let myobj = { pName: item, username: "sample@test.com"};
+    let myobj = {
+        pName: item,
+        pPrice: price,
+        username: "sample@test.com"
+    };
     const insertResult = await collection.insertOne(myobj);
 
     console.log('Inserted document =>', insertResult);

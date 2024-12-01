@@ -15,16 +15,14 @@ export default function MyApp() {
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState(false);
 
-    function handleError(error) {
+    function handleError() {
         setError(error => !error);
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const newUsername = username.toLowerCase()
-
-        setUsername(newUsername.trim());
+        setUsername(username.trim());
         setPassword(password.trim());
 
         console.log(username, password);
@@ -54,10 +52,23 @@ export default function MyApp() {
             console.error(err);
         } finally {
             if (loginSuccess) {
+                saveSessionData()
                 redirect('/')
             }
         }
         setPassword('')
+    }
+
+    function saveSessionData() {
+        fetch(`/api/saveData`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json', // Indicate the type of data being sent
+            },
+            body: JSON.stringify({
+                username
+            })
+        })
     }
 
     return (
