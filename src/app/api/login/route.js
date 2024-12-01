@@ -30,5 +30,4 @@ export async function POST(req, res) {
     } catch (error) {
         console.error("Login error:", error)
     }
-    return Response.json(findResult)
 }
