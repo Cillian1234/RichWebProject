@@ -7,6 +7,7 @@ import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import {redirect} from "next/navigation";
+import validator from 'email-validator'
 
 
 export default function MyApp() {
@@ -14,61 +15,73 @@ export default function MyApp() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
 
-    function handleError() {
-        setError(error => !error);
+    function handleError(errorMessage) {
+        setErrorMessage(errorMessage);
+        setError(true);
     }
+
+    function checkEmail() {
+        if (!validator.validate(username)) {
+            handleError("Invalid email");
+        }
+    }
+
+    function checkInputLength() {
+        if (username.length < 1 || username.length > 32) {
+            handleError("Invalid email or password length");
+        } else if (password.length < 1 || password.length > 32) {
+            handleError("Invalid email or password length");
+        }
+    }
+
+    // TODO: escaping + backend validation
 
     async function handleSubmit(e) {
         e.preventDefault();
 
+        // Trim leading or trailing space characters
         setUsername(username.trim());
         setPassword(password.trim());
-
-        console.log(username, password);
-
         let loginSuccess = false;
 
-        try {
-            fetch(`/api/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', // Indicate the type of data being sent
-                },
-                body: JSON.stringify({
-                    username, password
-                })
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log("Response from server", data)
-                    if (!data) {
-                        handleError();
-                    } else {
-                        loginSuccess = true;
-                    }
-                })
-        } catch (err) {
-            console.error(err);
-        } finally {
-            if (loginSuccess) {
-                saveSessionData()
-                redirect('/')
-            }
-        }
-        setPassword('')
-    }
+        setError(false); // Assume valid
 
-    function saveSessionData() {
-        fetch(`/api/saveData`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json', // Indicate the type of data being sent
-            },
-            body: JSON.stringify({
-                username
-            })
-        })
+        // Check inputs
+        checkEmail()
+        checkInputLength()
+
+        // If error present don't continue with login
+        if (!error) {
+            try {
+                fetch(`/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Indicate the type of data being sent
+                    },
+                    body: JSON.stringify({
+                        username, password
+                    })
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log("Response from server", data)
+                        if (!data) {
+                            handleError("Email or password not found");
+                        } else {
+                            loginSuccess = true;
+                        }
+                    })
+            } catch (err) {
+                console.error(err);
+            } finally {
+                if (loginSuccess) {
+                    redirect('/')
+                }
+            }
+            setPassword('')
+        }
     }
 
     return (
@@ -80,21 +93,20 @@ export default function MyApp() {
 
                 <TextField
                     variant="outlined"
-                    label="Username"
+                    label="Email"
+                    name="email"
                     required
-                    onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}
+                    maxLength={5}
+                    onChange={(e) => {setUsername(e.target.value);}}
+                    onBlur={checkEmail}
                 />
                 <br/>
                 <TextField
                     variant="outlined"
                     label="Password"
+                    name="password"
                     type="password"
-                    required
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}
+                    onChange={(e) => {setPassword(e.target.value);}}
                 />
 
                 <Button
@@ -106,8 +118,9 @@ export default function MyApp() {
                 </Button>
 
                 {error &&
-                    <p>Incorrect username or password, try
-                    <Link className="createAccountLink" href="./register">create an account</Link>
+                    <p>{errorMessage}
+                        <br/>
+                    <Link className="createAccountLink" href="./register">Create an account</Link>
                     instead!</p>
                 }
             </Box>

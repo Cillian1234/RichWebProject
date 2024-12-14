@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Navbar from "@/components/Navbar";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import {redirect} from "next/navigation";
 
 
 export default function MyApp() {
@@ -41,8 +42,10 @@ export default function MyApp() {
 
             } catch (err) {
                 console.error(err);
+            } finally {
+                setPassword('')
+                redirect('/')
             }
-        setPassword('')
         } else {
             handleError();
         }

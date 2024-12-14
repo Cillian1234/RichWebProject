@@ -1,25 +1,24 @@
 import connectDB from "@/app/api/connectDB";
 import {redirect} from "next/navigation";
+import bcrypt from "bcrypt";
 
 export async function POST(req, res) {
     const db= await connectDB();
+    const collection = db.collection('Users'); // collection name
 
     const body = await req.json()
     const {username, password} = body;
 
-    const collection = db.collection('Users'); // collection name
-    let findResult = "";
+    const saltRounds = 10;
+    const hash = await bcrypt.hash(password, saltRounds);
+
+    let findResult;
 
     try {
         if (!username || !password) {
             console.log("Username and password required")
-
         } else {
-            findResult = await collection.findOne(
-                {
-                    username
-                }
-            )
+            findResult = await collection.findOne({username})
             console.log(findResult)
             if (findResult) {
                 console.log("Username already in use")
@@ -28,7 +27,7 @@ export async function POST(req, res) {
                 findResult = await collection.insertOne(
                     {
                         username: username,
-                        password: password,
+                        password: hash,
                         acc_type: "Customer"
                     })
                 redirect('/')
