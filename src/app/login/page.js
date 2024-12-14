@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import {redirect} from "next/navigation";
 import validator from 'email-validator'
+import jsesc from "jsesc";
 
 
 export default function MyApp() {
@@ -36,14 +37,18 @@ export default function MyApp() {
         }
     }
 
+    function escaping(input) {
+        return jsesc(input);
+    }
+
     // TODO: escaping + backend validation
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         // Trim leading or trailing space characters
-        setUsername(username.trim());
-        setPassword(password.trim());
+        setUsername(escaping(username.trim()));
+        setPassword(escaping(password.trim()));
         let loginSuccess = false;
 
         setError(false); // Assume valid
@@ -71,14 +76,13 @@ export default function MyApp() {
                             handleError("Email or password not found");
                         } else {
                             loginSuccess = true;
+                            console.log(data);
                         }
                     })
             } catch (err) {
                 console.error(err);
             } finally {
-                if (loginSuccess) {
-                    redirect('/')
-                }
+                redirect('/')
             }
             setPassword('')
         }
@@ -96,7 +100,6 @@ export default function MyApp() {
                     label="Email"
                     name="email"
                     required
-                    maxLength={5}
                     onChange={(e) => {setUsername(e.target.value);}}
                     onBlur={checkEmail}
                 />

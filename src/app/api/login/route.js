@@ -1,5 +1,6 @@
 import connectDB from "@/app/api/connectDB";
 import bcrypt from "bcrypt";
+import jsesc from "jsesc";
 
 export async function POST(req, res) {
     const db= await connectDB();
@@ -10,8 +11,12 @@ export async function POST(req, res) {
 
     let findResult;
 
+    function escaping(input) {
+        return jsesc(input);
+    }
+
     try {
-        if (!username || !password) {
+        if (!username || !password) { // If username or password are null
             console.log("Username and password required")
             return Response.json(null)
         } else {
@@ -20,7 +25,8 @@ export async function POST(req, res) {
                 console.log("No documents found")
                 return Response.json(null)
             } else {
-                let hashResult = await bcrypt.compare(password, findResult.password);
+                let escapedPass = escaping(password); // Escape password
+                let hashResult = await bcrypt.compare(escapedPass, findResult.password);
                 console.log("Valid password: ", hashResult)
                 return Response.json(findResult)
             }
